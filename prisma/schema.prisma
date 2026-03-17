@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  phone         String?
+  password      String?
+  role          Role      @default(BUYER)
+  createdAt     DateTime  @default(now())
+
+  accounts Account[]
+  sessions Session[]
+  requests AccessRequest[]
+}
+
+enum Role {
+  BUYER
+  ADMIN
+}
+
+model Listing {
+  id     String        @id @default(cuid())
+  status ListingStatus @default(PENDING)
+
+  // PUBLIC FIELDS
+  businessType        String
+  category            String
+  neighbourhood       String
+  revenueRangeMin     Int
+  revenueRangeMax     Int
+  askingPriceRangeMin Int
+  askingPriceRangeMax Int
+  yearsInOperation    Int
+  sqftRange           String
+  tags                String[]
+  highlights          String[]
+  publicImages        String[]
+  heroImage           String
+
+  // GATED FIELDS
+  exactBusinessName   String
+  fullAddress         String
+  ownerName           String
+  ownerPhone          String
+  ownerEmail          String
+  exactMonthlyRevenue Int
+  exactAskingPrice    Int
+  fullGallery         String[]
+  leaseYears          Int?
+  profitMargin        Float?
+  additionalNotes     String?
+
+  createdAt DateTime      @default(now())
+  requests  AccessRequest[]
+}
+
+enum ListingStatus {
+  PENDING
+  ACTIVE
+  SOLD
+  REJECTED
+}
+
+model AccessRequest {
+  id        String        @id @default(cuid())
+  userId    String
+  listingId String
+  status    RequestStatus @default(PENDING)
+  budget    String
+  message   String?
+  createdAt DateTime      @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  listing Listing @relation(fields: [listingId], references: [id])
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model SellerSubmission {
+  id     String           @id @default(cuid())
+  status SubmissionStatus @default(PENDING)
+
+  sellerName   String
+  sellerPhone  String
+  sellerEmail  String
+
+  businessType     String
+  neighbourhood    String
+  city             String
+  yearsInOperation Int
+  sqft             Int?
+  askingPrice      Int
+  monthlyRevenue   Int
+  profitMargin     Float?
+  leaseYears       Int?
+  saleType         String
+  description      String?
+  tags             String[]
+
+  createdAt DateTime @default(now())
+}
+
+enum SubmissionStatus {
+  PENDING
+  CONVERTED
+  REJECTED
+}
+
+// NextAuth models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
