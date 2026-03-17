@@ -62,7 +62,7 @@ function BrowseContent() {
   const [search, setSearch] = useState('')
   const [industry, setIndustry] = useState('All')
   const [location, setLocation] = useState('All')
-  const [maxPrice, setMaxPrice] = useState(50000000)
+  const [maxPrice, setMaxPrice] = useState(100000000)
   // Initialise with mock data so cards are visible immediately
   const [listings, setListings] = useState<Listing[]>(mockListings)
   const [apiLoading, setApiLoading] = useState(true)
@@ -157,10 +157,10 @@ function BrowseContent() {
             </div>
             <div>
               <h3 style={{ fontSize: 11, fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--navy)', fontFamily: "'DM Mono', monospace", marginBottom: 16 }}>Max Price</h3>
-              <input type="range" min={500000} max={50000000} step={500000} value={maxPrice} onChange={e => setMaxPrice(Number(e.target.value))}
+              <input type="range" min={500000} max={100000000} step={500000} value={maxPrice} onChange={e => setMaxPrice(Number(e.target.value))}
                 style={{ width: '100%', accentColor: 'var(--gold)' }} />
               <div style={{ fontSize: 13, color: 'var(--navy-light)', marginTop: 8, fontFamily: "'DM Mono', monospace" }}>
-                Up to ₹{(maxPrice / 100000).toFixed(0)}L
+                Up to {maxPrice >= 10000000 ? `₹${(maxPrice / 10000000).toFixed(0)}Cr` : `₹${(maxPrice / 100000).toFixed(0)}L`}
               </div>
             </div>
           </div>
