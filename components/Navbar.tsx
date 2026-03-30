@@ -61,9 +61,8 @@ export default function Navbar() {
       {/* Desktop nav */}
       <ul style={{ display: 'flex', gap: 36, listStyle: 'none', margin: 0, padding: 0, alignItems: 'center' }} className="desktop-nav">
         {[
-          { href: '/browse', label: 'Explore' },
+          { href: '/browse', label: 'Buy' },
           { href: '/invest', label: 'Invest' },
-          { href: '/#how', label: 'How It Works' },
           { href: '/about', label: 'About' },
         ].map(link => (
           <li key={link.href}>
@@ -120,7 +119,7 @@ export default function Navbar() {
                 style={{ background: 'var(--gold)', color: 'var(--navy)', padding: '10px 22px', borderRadius: 4, fontSize: 12, fontWeight: 600, textDecoration: 'none', transition: 'all 0.2s', letterSpacing: '0.5px', display: 'inline-block', fontFamily: "'DM Mono', monospace", textTransform: 'uppercase' as const }}
                 onMouseEnter={e => { e.currentTarget.style.background = 'var(--navy)'; e.currentTarget.style.color = 'var(--gold)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
                 onMouseLeave={e => { e.currentTarget.style.background = 'var(--gold)'; e.currentTarget.style.color = 'var(--navy)'; e.currentTarget.style.transform = 'translateY(0)' }}
-              >Submit Business</Link>
+              >Sell</Link>
             </li>
           </>
         )}
@@ -136,10 +135,10 @@ export default function Navbar() {
       {menuOpen && (
         <div style={{ position: 'fixed', top: scrolled ? 60 : 72, left: 0, right: 0, background: 'rgba(13,27,42,0.98)', backdropFilter: 'blur(20px)', padding: '24px 32px', display: 'flex', flexDirection: 'column', gap: 16, borderBottom: '1px solid rgba(250,250,250,0.08)', zIndex: 99 }}>
           {[
-            { href: '/browse', label: 'Explore Opportunities' },
+            { href: '/browse', label: 'Buy' },
             { href: '/invest', label: 'Invest' },
             { href: '/about', label: 'About' },
-            { href: '/sell', label: 'Submit Your Business' },
+            { href: '/sell', label: 'Sell' },
           ].map(link => (
             <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)}
               style={{ fontSize: 16, color: '#FAFAFA', textDecoration: 'none', fontWeight: 500, padding: '8px 0', borderBottom: '1px solid rgba(250,250,250,0.08)' }}

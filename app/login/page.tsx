@@ -4,6 +4,7 @@ import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { MEMBERSHIP_SUBTEXT } from '@/lib/constants'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -56,7 +57,8 @@ export default function LoginPage() {
         </Link>
 
         <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 10, fontFamily: "'DM Mono', monospace" }}>— Welcome Back to Vowza</div>
-        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 32, fontWeight: 700, color: 'var(--navy)', letterSpacing: '-1px', marginBottom: 32 }}>Sign In</h1>
+        <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 32, fontWeight: 700, color: 'var(--navy)', letterSpacing: '-1px', marginBottom: 12 }}>Sign In</h1>
+        <p style={{ fontSize: 14, color: 'var(--navy-light)', textAlign: 'center', marginBottom: 24, lineHeight: 1.6, fontFamily: "'Cormorant Garant', serif", fontStyle: 'italic' }}>{MEMBERSHIP_SUBTEXT}</p>
 
         <button
           onClick={handleGoogle}

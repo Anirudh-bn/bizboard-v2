@@ -18,7 +18,7 @@ export default function SellPage() {
     monthlyRevenue: '',
     yearsInOp: '',
     description: '',
-    saleType: 'full',
+    saleType: 'For Sale',
     sellerName: '',
     sellerPhone: '',
     sellerEmail: '',
@@ -172,9 +172,9 @@ export default function SellPage() {
                   <div>
                     <label style={labelStyle}>Sale Type</label>
                     <select name="saleType" value={form.saleType} onChange={handleChange} style={{ ...inputStyle }}>
-                      <option value="full">Full Sale</option>
-                      <option value="partial">Partial Stake</option>
-                      <option value="franchise">Franchise</option>
+                      <option value="For Sale">For Sale</option>
+                      <option value="For Rent">For Rent</option>
+                      <option value="Lease Takeover">Lease Takeover</option>
                     </select>
                   </div>
                 </div>

@@ -1,5 +1,4 @@
-'use client'
-import { useState, useEffect } from 'react'
+import { prisma } from '@/lib/prisma'
 import HeroSection from '@/components/HeroSection'
 import MarqueeStrip from '@/components/MarqueeStrip'
 import ListingCard from '@/components/ListingCard'
@@ -7,40 +6,71 @@ import HowItWorks from '@/components/HowItWorks'
 import InvestCard from '@/components/InvestCard'
 import CTASection from '@/components/CTASection'
 import Footer from '@/components/Footer'
-import { listings as mockListings, Listing } from '@/data/listings'
 import { investments } from '@/data/investments'
+import { Listing } from '@/data/listings'
 import Link from 'next/link'
 
-function apiToCard(l: any): Listing {
+function mapListing(l: any): Listing {
   const days = Math.floor((Date.now() - new Date(l.createdAt).getTime()) / (1000 * 60 * 60 * 24))
   return {
-    ...l,
-    heroImage: l.heroImage || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80',
+    id: l.id,
+    businessType: l.businessType,
+    category: l.category,
+    neighbourhood: l.neighbourhood,
+    revenueRangeMin: l.revenueRangeMin,
+    revenueRangeMax: l.revenueRangeMax,
+    askingPriceRangeMin: l.askingPriceRangeMin,
+    askingPriceRangeMax: l.askingPriceRangeMax,
+    yearsInOperation: l.yearsInOperation,
+    sqftRange: l.sqftRange,
     tags: l.tags ?? [],
+    highlights: l.highlights ?? [],
+    heroImage: l.heroImage || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80',
     isVerified: true,
     listedDaysAgo: Math.max(days, 1),
+    saleType: l.saleType ?? undefined,
   }
 }
 
-export default function HomePage() {
-  // Show mock data immediately; API data replaces it when ready
-  const [featured, setFeatured] = useState<Listing[]>(mockListings.slice(0, 3))
-  const featuredInvestments = investments.slice(0, 2)
+function formatDeals(total: number): string {
+  if (total === 0) return '₹0'
+  if (total >= 10000000) return `₹${(total / 10000000).toFixed(0)}Cr`
+  return `₹${(total / 100000).toFixed(0)}L`
+}
 
-  useEffect(() => {
-    fetch('/api/listings')
-      .then(r => r.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setFeatured(data.slice(0, 3).map(apiToCard))
-        }
-      })
-      .catch(() => {/* keep mock data on error */})
-  }, [])
+export default async function HomePage() {
+  const [activeListings, listingCount, memberCount, soldListings] = await Promise.all([
+    prisma.listing.findMany({
+      where: { status: 'ACTIVE' },
+      orderBy: { createdAt: 'desc' },
+      take: 3,
+      select: {
+        id: true, businessType: true, category: true, neighbourhood: true,
+        revenueRangeMin: true, revenueRangeMax: true,
+        askingPriceRangeMin: true, askingPriceRangeMax: true,
+        yearsInOperation: true, sqftRange: true, tags: true,
+        highlights: true, heroImage: true, createdAt: true, saleType: true,
+      },
+    }),
+    prisma.listing.count({ where: { status: 'ACTIVE' } }),
+    prisma.user.count(),
+    prisma.listing.findMany({
+      where: { status: 'SOLD' },
+      select: { exactAskingPrice: true },
+    }),
+  ])
+
+  const totalDeals = soldListings.reduce((sum, l) => sum + (l.exactAskingPrice || 0), 0)
+  const featured = activeListings.map(mapListing)
+  const featuredInvestments = investments.slice(0, 2)
 
   return (
     <>
-      <HeroSection />
+      <HeroSection
+        listingCount={listingCount}
+        totalDealsFormatted={formatDeals(totalDeals)}
+        memberCount={memberCount}
+      />
       <MarqueeStrip />
 
       {/* Curated Opportunities */}
@@ -52,11 +82,7 @@ export default function HomePage() {
               Verified Businesses,<br />Ready for <em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>New Ownership</em>
             </h2>
           </div>
-          <Link href="/browse"
-            style={{ fontSize: 13, fontWeight: 600, color: 'var(--navy)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8, borderBottom: '1px solid var(--navy)', paddingBottom: 2, transition: 'all 0.2s', whiteSpace: 'nowrap', fontFamily: "'DM Mono', monospace" }}
-            onMouseEnter={e => { e.currentTarget.style.color = 'var(--gold)'; e.currentTarget.style.borderColor = 'var(--gold)' }}
-            onMouseLeave={e => { e.currentTarget.style.color = 'var(--navy)'; e.currentTarget.style.borderColor = 'var(--navy)' }}
-          >
+          <Link href="/browse" className="home-view-all">
             View All Opportunities →
           </Link>
         </div>
@@ -87,11 +113,7 @@ export default function HomePage() {
               Exclusive Investment<br /><em style={{ fontStyle: 'italic', color: 'var(--gold)' }}>Opportunities</em>
             </h2>
           </div>
-          <Link href="/invest"
-            style={{ fontSize: 13, fontWeight: 600, color: 'var(--navy)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8, borderBottom: '1px solid var(--navy)', paddingBottom: 2, transition: 'all 0.2s', whiteSpace: 'nowrap', fontFamily: "'DM Mono', monospace" }}
-            onMouseEnter={e => { e.currentTarget.style.color = 'var(--gold)'; e.currentTarget.style.borderColor = 'var(--gold)' }}
-            onMouseLeave={e => { e.currentTarget.style.color = 'var(--navy)'; e.currentTarget.style.borderColor = 'var(--navy)' }}
-          >
+          <Link href="/invest" className="home-view-all">
             All Opportunities →
           </Link>
         </div>

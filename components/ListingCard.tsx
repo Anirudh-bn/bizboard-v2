@@ -64,6 +64,11 @@ export default function ListingCard({ listing, index = 0 }: Props) {
           ))}
         </div>
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
+          {listing.saleType && (
+            <span style={{ background: 'rgba(13,27,42,0.07)', color: 'var(--navy)', padding: '4px 10px', borderRadius: 100, fontSize: 10, fontWeight: 700, letterSpacing: '0.3px', textTransform: 'uppercase' as const }}>
+              {listing.saleType}
+            </span>
+          )}
           {listing.tags.map((tag, i) => (
             <span key={tag} style={{
               background: i === 0 ? 'rgba(201,168,76,0.1)' : i === 1 ? 'var(--gold-pale)' : 'var(--ivory-dark)',

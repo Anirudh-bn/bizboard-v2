@@ -1,54 +1,16 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
-function useCounter(target: number, suffix: string = '', prefix: string = '', duration: number = 1800) {
-  const [value, setValue] = useState(`${prefix}0${suffix}`)
-  const [started, setStarted] = useState(false)
-
-  useEffect(() => {
-    if (!started) return
-    let startTime: number | null = null
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp
-      const progress = Math.min((timestamp - startTime) / duration, 1)
-      const ease = 1 - Math.pow(1 - progress, 3)
-      const val = Math.floor(ease * target)
-      setValue(`${prefix}${val.toLocaleString('en-IN')}${suffix}`)
-      if (progress < 1) requestAnimationFrame(step)
-    }
-    requestAnimationFrame(step)
-  }, [started, target, suffix, prefix, duration])
-
-  return { value, start: () => setStarted(true) }
+interface Props {
+  listingCount?: number
+  totalDealsFormatted?: string
+  memberCount?: number
 }
 
-export default function HeroSection() {
+export default function HeroSection({ listingCount = 0, totalDealsFormatted = '₹0', memberCount = 0 }: Props) {
   const imgRef = useRef<HTMLImageElement>(null)
-  const trustRef = useRef<HTMLDivElement>(null)
-  const [counterStarted, setCounterStarted] = useState(false)
-
-  const counter1 = useCounter(340, '+', '', 1800)
-  const counter2 = useCounter(48, 'Cr', '₹', 1800)
-  const counter3 = useCounter(1200, '+', '', 1800)
-
-  useEffect(() => {
-    const el = trustRef.current
-    if (!el) return
-    const obs = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && !counterStarted) {
-        setCounterStarted(true)
-        counter1.start()
-        counter2.start()
-        counter3.start()
-        obs.disconnect()
-      }
-    }, { threshold: 0.5 })
-    obs.observe(el)
-    return () => obs.disconnect()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [counterStarted])
 
   useEffect(() => {
     const onScroll = () => {
@@ -64,6 +26,14 @@ export default function HeroSection() {
     hidden: { opacity: 0, y: 24 },
     visible: (delay: number) => ({ opacity: 1, y: 0, transition: { duration: 0.8, delay, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] } }),
   }
+
+  const stats = [
+    { value: `${listingCount}+`, label: 'Verified Opportunities' },
+    { divider: true },
+    { value: totalDealsFormatted, label: 'In Closed Deals' },
+    { divider: true },
+    { value: `${memberCount}+`, label: 'Qualified Members' },
+  ]
 
   return (
     <section style={{ minHeight: '100vh', paddingTop: 106, display: 'grid', gridTemplateColumns: '1fr 1fr', position: 'relative', overflow: 'hidden' }}>
@@ -113,16 +83,10 @@ export default function HeroSection() {
           </Link>
         </motion.div>
 
-        <motion.div ref={trustRef} custom={0.8} initial="hidden" animate="visible" variants={fadeUp}
+        <motion.div custom={0.8} initial="hidden" animate="visible" variants={fadeUp}
           style={{ display: 'flex', gap: 28, marginTop: 56, alignItems: 'stretch' }}
         >
-          {[
-            { value: counter1.value, label: 'Verified Opportunities' },
-            { divider: true },
-            { value: counter2.value, label: 'In Closed Deals' },
-            { divider: true },
-            { value: counter3.value, label: 'Qualified Members' },
-          ].map((item, i) =>
+          {stats.map((item, i) =>
             'divider' in item ? (
               <div key={i} style={{ width: 1, background: 'var(--border)', alignSelf: 'stretch', margin: '4px 0' }} />
             ) : (

@@ -84,6 +84,9 @@ export default function InvestCard({ investment, index = 0 }: Props) {
               </div>
             ))}
           </div>
+          <p style={{ fontSize: 11, color: 'var(--navy-light)', fontStyle: 'italic', marginBottom: 16, lineHeight: 1.5 }}>
+            * Projected figures only. Verify independently during due diligence.
+          </p>
           <button
             onClick={handleClick}
             style={{

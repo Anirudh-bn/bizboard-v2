@@ -59,6 +59,8 @@ model Listing {
   profitMargin        Float?
   additionalNotes     String?
 
+  saleType            String?
+
   createdAt DateTime      @default(now())
   requests  AccessRequest[]
 }

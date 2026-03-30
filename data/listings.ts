@@ -14,6 +14,7 @@ export interface Listing {
   heroImage: string
   isVerified: boolean
   listedDaysAgo: number
+  saleType?: string
 }
 
 export const listings: Listing[] = [
