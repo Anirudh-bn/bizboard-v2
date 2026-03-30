@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Navbar from '@/components/Navbar'
-import ParticleCanvas from '@/components/ParticleCanvas'
 import Ticker from '@/components/Ticker'
 import Providers from '@/components/Providers'
 
@@ -22,8 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Providers>
-          <ParticleCanvas />
-          <Navbar />
+<Navbar />
           <Ticker />
           <main>{children}</main>
         </Providers>
