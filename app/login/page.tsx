@@ -45,11 +45,18 @@ export default function LoginPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--ivory)', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 72 }}>
+    <div style={{ minHeight: '100vh', background: 'var(--ivory)', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 72, padding: '72px 20px 40px' }}>
+      <style>{`
+        @media (max-width: 480px) {
+          .auth-card { padding: 36px 24px !important; border-radius: 12px !important; }
+          .auth-card h1 { font-size: 28px !important; }
+        }
+      `}</style>
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
+        className="auth-card"
         style={{ width: '100%', maxWidth: 440, padding: '48px 40px', background: 'var(--white)', borderRadius: 16, border: '1px solid var(--border)', boxShadow: '0 8px 40px rgba(13,27,42,0.08)' }}
       >
         <Link href="/" style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 700, color: 'var(--navy)', letterSpacing: 3, textDecoration: 'none', display: 'block', marginBottom: 32, textTransform: 'uppercase' as const }}>

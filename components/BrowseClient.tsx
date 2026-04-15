@@ -1,6 +1,5 @@
 'use client'
-import { useState, useMemo, useEffect, Suspense } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import ListingCard from '@/components/ListingCard'
 import Footer from '@/components/Footer'
@@ -20,13 +19,6 @@ const budgetOptions = [
   { label: 'Above ₹5Cr', value: 'above5cr' },
 ]
 
-const industrySlugMap: Record<string, string> = {
-  'restaurant': 'Restaurant',
-  'retail': 'Retail',
-  'it-software': 'Technology',
-  'manufacturing': 'Manufacturing',
-}
-
 function matchesBudget(askingPriceRangeMax: number, budget: string): boolean {
   switch (budget) {
     case 'any': return true
@@ -41,23 +33,15 @@ function matchesBudget(askingPriceRangeMax: number, budget: string): boolean {
 
 interface Props {
   listings: Listing[]
+  initialIndustry?: string
 }
 
-function BrowseContent({ listings }: Props) {
-  const searchParams = useSearchParams()
+export default function BrowseClient({ listings, initialIndustry = 'All' }: Props) {
   const [search, setSearch] = useState('')
-  const [industry, setIndustry] = useState('All')
+  const [industry, setIndustry] = useState(initialIndustry)
   const [location, setLocation] = useState('All')
   const [dealType, setDealType] = useState('All')
   const [budget, setBudget] = useState('any')
-
-  useEffect(() => {
-    const param = searchParams.get('industry')
-    if (param) {
-      const mapped = industrySlugMap[param.toLowerCase()]
-      if (mapped) setIndustry(mapped)
-    }
-  }, [searchParams])
 
   const filtered = useMemo(() => {
     return listings.filter((l: any) => {
@@ -80,9 +64,24 @@ function BrowseContent({ listings }: Props) {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.4; }
         }
+        @media (max-width: 900px) {
+          .browse-hero { padding: 40px 24px 28px !important; }
+          .browse-hero h1 { font-size: 34px !important; margin-bottom: 24px !important; }
+          .browse-layout { grid-template-columns: 1fr !important; }
+          .browse-sidebar { position: static !important; border-right: none !important; border-bottom: 1px solid var(--border); padding: 24px !important; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+          .browse-sidebar > div { margin-bottom: 0 !important; }
+          .browse-grid { padding: 24px !important; }
+          .browse-grid > div:last-child { grid-template-columns: 1fr !important; gap: 16px !important; }
+        }
+        @media (max-width: 480px) {
+          .browse-hero { padding: 36px 20px 24px !important; }
+          .browse-hero h1 { font-size: 30px !important; }
+          .browse-sidebar { grid-template-columns: 1fr !important; gap: 20px; padding: 20px !important; }
+          .browse-grid { padding: 20px !important; }
+        }
       `}</style>
       <div style={{ paddingTop: 106, minHeight: '100vh', background: 'var(--ivory)' }}>
-        <div style={{ padding: '60px 60px 40px', borderBottom: '1px solid var(--border)' }}>
+        <div className="browse-hero" style={{ padding: '60px 60px 40px', borderBottom: '1px solid var(--border)' }}>
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 12, fontFamily: "'DM Mono', monospace" }}>— Explore Opportunities</div>
             <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(36px, 4vw, 56px)', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-1.5px', color: 'var(--navy)', marginBottom: 32 }}>
@@ -105,9 +104,9 @@ function BrowseContent({ listings }: Props) {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 0 }}>
+        <div className="browse-layout" style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: 0 }}>
           {/* Sidebar */}
-          <div style={{ padding: '40px 32px', borderRight: '1px solid var(--border)', position: 'sticky', top: 106, height: 'fit-content' }}>
+          <div className="browse-sidebar" style={{ padding: '40px 32px', borderRight: '1px solid var(--border)', position: 'sticky', top: 106, height: 'fit-content' }}>
 
             {/* Deal Type */}
             <div style={{ marginBottom: 36 }}>
@@ -163,7 +162,7 @@ function BrowseContent({ listings }: Props) {
           </div>
 
           {/* Grid */}
-          <div style={{ padding: 40 }}>
+          <div className="browse-grid" style={{ padding: 40 }}>
             {filtered.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--navy-light)' }}>
                 <div style={{ fontSize: 48, marginBottom: 16 }}>🔍</div>
@@ -182,28 +181,5 @@ function BrowseContent({ listings }: Props) {
       </div>
       <Footer />
     </>
-  )
-}
-
-export default function BrowseClient({ listings }: Props) {
-  return (
-    <Suspense fallback={
-      <div style={{ paddingTop: 106, minHeight: '100vh', background: 'var(--ivory)' }}>
-        <div style={{ padding: '60px 60px 40px', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ height: 14, width: 200, background: 'var(--ivory-dark)', borderRadius: 4, marginBottom: 20, opacity: 0.6 }} />
-          <div style={{ height: 52, width: '60%', background: 'var(--ivory-dark)', borderRadius: 6, opacity: 0.6 }} />
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr' }}>
-          <div style={{ padding: '40px 32px', borderRight: '1px solid var(--border)' }} />
-          <div style={{ padding: 40, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }}>
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} style={{ height: 420, background: 'var(--white)', borderRadius: 0, opacity: 0.5 }} />
-            ))}
-          </div>
-        </div>
-      </div>
-    }>
-      <BrowseContent listings={listings} />
-    </Suspense>
   )
 }

@@ -36,7 +36,7 @@ export default function HeroSection({ listingCount = 0, totalDealsFormatted = 'â
   ]
 
   return (
-    <section style={{ minHeight: '100vh', paddingTop: 106, display: 'grid', gridTemplateColumns: '1fr 1fr', position: 'relative', overflow: 'hidden' }}>
+    <section className="hero-section" style={{ minHeight: '100vh', paddingTop: 106, display: 'grid', gridTemplateColumns: '1fr 1fr', position: 'relative', overflow: 'hidden' }}>
       {/* LEFT */}
       <div style={{ padding: '80px 60px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 2 }}>
 
@@ -65,6 +65,7 @@ export default function HeroSection({ listingCount = 0, totalDealsFormatted = 'â
         </motion.p>
 
         <motion.div custom={0.65} initial="hidden" animate="visible" variants={fadeUp}
+          className="hero-cta"
           style={{ display: 'flex', gap: 16, alignItems: 'center' }}
         >
           <Link href="/browse" style={{ background: 'var(--navy)', color: 'var(--ivory)', padding: '16px 32px', borderRadius: 6, fontSize: 14, fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 10, border: '2px solid var(--navy)', transition: 'all 0.3s ease' }}
@@ -83,6 +84,7 @@ export default function HeroSection({ listingCount = 0, totalDealsFormatted = 'â
           </Link>
         </motion.div>
 
+        {/* Stats row hidden until we have real data â€” restore by uncommenting.
         <motion.div custom={0.8} initial="hidden" animate="visible" variants={fadeUp}
           style={{ display: 'flex', gap: 28, marginTop: 56, alignItems: 'stretch' }}
         >
@@ -97,6 +99,7 @@ export default function HeroSection({ listingCount = 0, totalDealsFormatted = 'â
             )
           )}
         </motion.div>
+        */}
       </div>
 
       {/* RIGHT - parallax */}
@@ -133,9 +136,19 @@ export default function HeroSection({ listingCount = 0, totalDealsFormatted = 'â
 
       <style>{`
         @media (max-width: 1024px) {
-          section { grid-template-columns: 1fr !important; }
-          section > div:first-child { padding: 60px 32px !important; }
-          section > div:last-child { height: 50vh; }
+          .hero-section { grid-template-columns: 1fr !important; }
+          .hero-section > div:first-child { padding: 60px 32px !important; }
+          .hero-section > div:last-child { height: 50vh; }
+        }
+        @media (max-width: 640px) {
+          .hero-section { padding-top: 80px !important; min-height: auto !important; }
+          .hero-section > div:first-child { padding: 40px 20px 32px !important; }
+          .hero-section > div:last-child { height: 42vh; }
+          .hero-section h1 { font-size: 42px !important; letter-spacing: -1.2px !important; }
+          .hero-section p { font-size: 15px !important; line-height: 1.7 !important; margin-bottom: 32px !important; max-width: 100% !important; }
+          .hero-cta { flex-direction: column !important; align-items: stretch !important; width: 100%; gap: 12px !important; }
+          .hero-cta a { width: 100%; justify-content: center; padding: 14px 20px !important; }
+          .hero-section .float-1, .hero-section .float-2, .hero-section .float-3 { display: none !important; }
         }
       `}</style>
     </section>

@@ -145,7 +145,13 @@ export default function Navbar() {
             >{link.label}</Link>
           ))}
           {session ? (
-            <button onClick={() => signOut()} style={{ background: 'none', border: 'none', fontSize: 16, color: '#C9A84C', textAlign: 'left', cursor: 'pointer', fontFamily: "'Cormorant Garant', serif", padding: '8px 0' }}>Sign Out</button>
+            <>
+              <Link href="/requests" onClick={() => setMenuOpen(false)} style={{ fontSize: 16, color: '#FAFAFA', textDecoration: 'none', fontWeight: 500, padding: '8px 0', borderBottom: '1px solid rgba(250,250,250,0.08)' }}>My Requests</Link>
+              {user?.role === 'ADMIN' && (
+                <Link href="/admin" onClick={() => setMenuOpen(false)} style={{ fontSize: 16, color: 'var(--gold)', textDecoration: 'none', fontWeight: 600, padding: '8px 0', borderBottom: '1px solid rgba(250,250,250,0.08)' }}>Command Centre</Link>
+              )}
+              <button onClick={() => { setMenuOpen(false); signOut({ callbackUrl: '/' }) }} style={{ background: 'none', border: 'none', fontSize: 16, color: '#C9A84C', textAlign: 'left', cursor: 'pointer', fontFamily: "'Cormorant Garant', serif", padding: '8px 0' }}>Sign Out</button>
+            </>
           ) : (
             <Link href="/login" onClick={() => setMenuOpen(false)} style={{ fontSize: 16, color: 'var(--gold)', textDecoration: 'none', fontWeight: 600, padding: '8px 0' }}>Join Vowza</Link>
           )}

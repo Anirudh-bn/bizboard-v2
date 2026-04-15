@@ -5,12 +5,13 @@ import { prisma } from '@/lib/prisma'
 import ListingDetailClient from '@/components/ListingDetailClient'
 
 interface Props {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export default async function ListingPage({ params }: Props) {
+  const { id } = await params
   const [listing, session] = await Promise.all([
-    prisma.listing.findUnique({ where: { id: params.id } }),
+    prisma.listing.findUnique({ where: { id } }),
     getServerSession(authOptions),
   ])
 
@@ -20,7 +21,7 @@ export default async function ListingPage({ params }: Props) {
 
   const accessRequest = userId
     ? await prisma.accessRequest.findFirst({
-        where: { userId, listingId: params.id, status: 'APPROVED' },
+        where: { userId, listingId: id, status: 'APPROVED' },
       })
     : null
 
@@ -59,7 +60,7 @@ export default async function ListingPage({ params }: Props) {
 
   const pendingRequest = userId
     ? await prisma.accessRequest.findFirst({
-        where: { userId, listingId: params.id },
+        where: { userId, listingId: id },
         orderBy: { createdAt: 'desc' },
       })
     : null

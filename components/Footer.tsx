@@ -25,8 +25,6 @@ export default function Footer() {
             { label: 'Manufacturing', href: '/browse?industry=manufacturing' },
           ]},
           { heading: 'Contact', links: [
-            { label: '+91 12345 67890', href: 'tel:+911234567890' },
-            { label: 'info@vowza.in', href: 'mailto:info@vowza.in' },
             { label: 'Hyderabad, Telangana', href: '#' },
             { label: 'Support Centre', href: '#' },
           ]},
@@ -51,11 +49,15 @@ export default function Footer() {
             footer { grid-template-columns: 1fr 1fr !important; padding: 48px 32px !important; }
           }
           @media (max-width: 768px) {
-            footer { grid-template-columns: 1fr !important; }
+            footer { grid-template-columns: 1fr !important; gap: 32px !important; }
+          }
+          @media (max-width: 640px) {
+            footer { padding: 48px 20px !important; }
+            .footer-bottom { flex-direction: column !important; gap: 8px; text-align: center; padding: 20px !important; }
           }
         `}</style>
       </footer>
-      <div style={{ background: 'var(--navy)', borderTop: '1px solid rgba(250,250,250,0.05)', padding: '24px 60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="footer-bottom" style={{ background: 'var(--navy)', borderTop: '1px solid rgba(250,250,250,0.05)', padding: '24px 60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <p style={{ fontSize: 12, color: 'rgba(250,250,250,0.25)', fontFamily: "'DM Mono', monospace", margin: 0 }}>© 2026 VOWZA · Built in Hyderabad, India 🤍</p>
         <p style={{ fontSize: 12, color: 'rgba(250,250,250,0.25)', fontFamily: "'DM Mono', monospace", margin: 0 }}>Discreet · Verified · Exclusive</p>
       </div>

@@ -46,8 +46,21 @@ export default async function RequestsPage() {
 
   return (
     <>
+      <style>{`
+        @media (max-width: 768px) {
+          .requests-shell { padding: 48px 24px !important; }
+          .requests-shell h1 { font-size: 32px !important; letter-spacing: -1.2px !important; }
+          .requests-card { padding: 20px !important; flex-direction: column; align-items: stretch !important; gap: 16px !important; }
+          .requests-card img { width: 100% !important; height: 160px !important; }
+          .requests-card-actions { align-items: flex-start !important; flex-direction: row !important; justify-content: space-between; width: 100%; }
+        }
+        @media (max-width: 480px) {
+          .requests-shell { padding: 36px 20px !important; }
+          .requests-shell h1 { font-size: 28px !important; }
+        }
+      `}</style>
       <div style={{ paddingTop: 106, minHeight: '100vh', background: 'var(--ivory)' }}>
-        <div style={{ padding: '60px 60px', maxWidth: 900, margin: '0 auto' }}>
+        <div className="requests-shell" style={{ padding: '60px 60px', maxWidth: 900, margin: '0 auto' }}>
           <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 12, fontFamily: "'DM Mono', monospace" }}>— Your Activity</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 40 }}>
             <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 40, fontWeight: 700, letterSpacing: '-1.5px', color: 'var(--navy)', margin: 0 }}>My Requests</h1>
@@ -79,6 +92,7 @@ export default async function RequestsPage() {
                 return (
                   <div
                     key={req.id}
+                    className="requests-card"
                     style={{ background: 'var(--white)', border: '1px solid var(--border)', borderRadius: 10, padding: '24px 28px', display: 'flex', gap: 20, alignItems: 'flex-start' }}
                   >
                     {/* Thumbnail */}
@@ -107,7 +121,7 @@ export default async function RequestsPage() {
                     </div>
 
                     {/* Status + action */}
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 12, flexShrink: 0 }}>
+                    <div className="requests-card-actions" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 12, flexShrink: 0 }}>
                       <span style={{ background: config.bg, color: config.color, padding: '5px 14px', borderRadius: 100, fontSize: 11, fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
                         {config.label}
                       </span>

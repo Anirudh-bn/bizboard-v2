@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default function CTASection() {
   return (
-    <section style={{ padding: '120px 60px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+    <section className="cta-section" style={{ padding: '120px 60px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: 800, height: 800, background: 'radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
       <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 20, fontFamily: "'DM Mono', monospace", display: 'block' }}>— Join the Inner Circle</div>
       <motion.h2 initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
@@ -34,6 +34,15 @@ export default function CTASection() {
           Submit Your Business
         </Link>
       </motion.div>
+      <style>{`
+        @media (max-width: 640px) {
+          .cta-section { padding: 72px 20px !important; }
+          .cta-section h2 { font-size: 32px !important; letter-spacing: -1px !important; }
+          .cta-section p { font-size: 15px !important; }
+          .cta-section > div:last-child { flex-direction: column !important; gap: 12px !important; align-items: stretch !important; }
+          .cta-section > div:last-child a { width: 100%; justify-content: center; padding: 14px 20px !important; }
+        }
+      `}</style>
     </section>
   )
 }

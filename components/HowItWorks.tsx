@@ -49,8 +49,15 @@ export default function HowItWorks() {
       </div>
       <style>{`
         @media (max-width: 1024px) {
-          section > div:last-child { grid-template-columns: 1fr !important; }
-          section { padding: 80px 32px !important; }
+          #how { padding: 80px 32px !important; }
+          #how > div:last-child { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 640px) {
+          #how { padding: 64px 20px !important; }
+          #how > div:nth-child(2) { margin-bottom: 40px !important; }
+          #how h2 { font-size: 32px !important; letter-spacing: -1px !important; }
+          #how > div:last-child > div { padding: 36px 28px !important; }
+          #how > div:last-child > div > div:first-child { font-size: 56px !important; top: 20px !important; right: 20px !important; }
         }
       `}</style>
     </section>

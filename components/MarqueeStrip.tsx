@@ -11,10 +11,10 @@ export default function MarqueeStrip() {
   ]
 
   return (
-    <div style={{ background: 'var(--navy)', padding: '22px 0', overflow: 'hidden', display: 'flex' }}>
+    <div className="marquee-strip" style={{ background: 'var(--navy)', padding: '22px 0', overflow: 'hidden', display: 'flex' }}>
       <div className="marquee-animate" style={{ display: 'flex', whiteSpace: 'nowrap' }}>
         {[...items, ...items].map((item, i) => (
-          <div key={i} style={{
+          <div key={i} className="marquee-item" style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: 16,
@@ -30,6 +30,12 @@ export default function MarqueeStrip() {
           </div>
         ))}
       </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .marquee-strip { padding: 16px 0 !important; }
+          .marquee-item { padding: 0 20px !important; font-size: 13px !important; gap: 12px !important; }
+        }
+      `}</style>
     </div>
   )
 }

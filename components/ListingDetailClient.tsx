@@ -40,16 +40,36 @@ export default function ListingDetailClient({ listing, isApproved, initialReques
 
   return (
     <>
-      <div style={{ paddingTop: 106, minHeight: '100vh', background: 'var(--ivory)' }}>
+      <style>{`
+        @media (max-width: 900px) {
+          .listing-detail .listing-hero-caption { left: 32px !important; right: 32px !important; bottom: 32px; }
+          .listing-detail .listing-body { grid-template-columns: 1fr !important; padding: 40px 32px !important; gap: 32px !important; }
+          .listing-detail .listing-main { padding-right: 0 !important; }
+          .listing-detail .listing-sidebar-card { position: static !important; }
+          .listing-detail .listing-overview-grid { grid-template-columns: 1fr 1fr !important; }
+          .listing-detail .listing-gated-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+          .listing-detail .listing-back { padding: 0 32px 32px !important; }
+        }
+        @media (max-width: 640px) {
+          .listing-detail .listing-hero { height: 44vh !important; }
+          .listing-detail .listing-hero-caption { left: 20px !important; right: 20px !important; bottom: 24px !important; }
+          .listing-detail .listing-hero-caption h1 { font-size: 28px !important; letter-spacing: -1px !important; }
+          .listing-detail .listing-body { padding: 32px 20px !important; }
+          .listing-detail .listing-overview-grid { grid-template-columns: 1fr !important; }
+          .listing-detail .listing-sidebar-card { padding: 24px !important; }
+          .listing-detail .listing-back { padding: 0 20px 32px !important; }
+        }
+      `}</style>
+      <div className="listing-detail" style={{ paddingTop: 106, minHeight: '100vh', background: 'var(--ivory)' }}>
         {/* Hero */}
-        <div style={{ height: '50vh', position: 'relative', overflow: 'hidden' }}>
+        <div className="listing-hero" style={{ height: '50vh', position: 'relative', overflow: 'hidden' }}>
           <img
             src={listing.heroImage || 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80'}
             alt={listing.businessType}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 30%, rgba(26,22,18,0.75) 100%)' }} />
-          <div style={{ position: 'absolute', bottom: 40, left: 60 }}>
+          <div className="listing-hero-caption" style={{ position: 'absolute', bottom: 40, left: 60 }}>
             <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'rgba(247,243,238,0.7)', fontFamily: "'DM Mono', monospace", marginBottom: 12 }}>{listing.category}</div>
             <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 900, color: 'white', letterSpacing: '-1.5px', marginBottom: 12 }}>
               {isApproved ? listing.exactBusinessName : `${listing.businessType} — ${listing.neighbourhood}`}
@@ -61,11 +81,11 @@ export default function ListingDetailClient({ listing, isApproved, initialReques
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 0, maxWidth: 1200, margin: '0 auto', padding: '60px 60px' }}>
+        <div className="listing-body" style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 0, maxWidth: 1200, margin: '0 auto', padding: '60px 60px' }}>
           {/* Main */}
-          <div style={{ paddingRight: 60 }}>
+          <div className="listing-main" style={{ paddingRight: 60 }}>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: 26, fontWeight: 700, color: 'var(--navy)', marginBottom: 24, letterSpacing: '-0.5px' }}>Overview</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'var(--border)', border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden', marginBottom: 32 }}>
+            <div className="listing-overview-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'var(--border)', border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden', marginBottom: 32 }}>
               {[
                 { val: formatPrice(listing.askingPriceRangeMin, listing.askingPriceRangeMax), key: 'Asking Price Range' },
                 { val: `₹${(listing.revenueRangeMin / 100000).toFixed(0)}L–${(listing.revenueRangeMax / 100000).toFixed(0)}L/mo`, key: 'Monthly Revenue' },
@@ -113,7 +133,7 @@ export default function ListingDetailClient({ listing, isApproved, initialReques
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
                   <span style={{ background: 'rgba(201,168,76,0.12)', color: 'var(--gold)', padding: '4px 12px', borderRadius: 100, fontSize: 11, fontWeight: 700 }}>Confidential Access Granted</span>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 24 }}>
+                <div className="listing-gated-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 24 }}>
                   {[
                     { label: 'Business Name', val: listing.exactBusinessName },
                     { label: 'Full Address', val: listing.fullAddress },
@@ -163,7 +183,7 @@ export default function ListingDetailClient({ listing, isApproved, initialReques
 
           {/* Sidebar */}
           <div>
-            <div style={{ background: 'var(--white)', border: '1px solid var(--border)', borderRadius: 12, padding: 32, position: 'sticky', top: 120 }}>
+            <div className="listing-sidebar-card" style={{ background: 'var(--white)', border: '1px solid var(--border)', borderRadius: 12, padding: 32, position: 'sticky', top: 120 }}>
               <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, fontWeight: 700, color: 'var(--navy)', marginBottom: 4, letterSpacing: '-1px' }}>
                 {formatPrice(listing.askingPriceRangeMin, listing.askingPriceRangeMax)}
               </div>
@@ -202,7 +222,7 @@ export default function ListingDetailClient({ listing, isApproved, initialReques
           </div>
         </div>
 
-        <div style={{ padding: '0 60px 40px', maxWidth: 1200, margin: '0 auto' }}>
+        <div className="listing-back" style={{ padding: '0 60px 40px', maxWidth: 1200, margin: '0 auto' }}>
           <Link href="/browse" style={{ fontSize: 13, color: 'var(--navy-light)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>← Back to All Listings</Link>
         </div>
       </div>
