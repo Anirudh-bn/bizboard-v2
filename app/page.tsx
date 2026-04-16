@@ -98,8 +98,10 @@ export default async function HomePage() {
           }
           @media (max-width: 768px) {
             #listings { padding: 56px 16px !important; }
-            #listings > div:last-child { grid-template-columns: 1fr !important; }
             #listings > div:first-child { flex-direction: column !important; align-items: flex-start !important; gap: 24px; margin-bottom: 32px !important; }
+          }
+          @media (max-width: 767px) {
+            #listings > div:last-child { grid-template-columns: 1fr !important; }
           }
           @media (max-width: 640px) {
             #listings h2 { font-size: 32px !important; letter-spacing: -1px !important; }
@@ -133,8 +135,10 @@ export default async function HomePage() {
           }
           @media (max-width: 768px) {
             #invest { padding: 56px 16px !important; }
-            #invest > div:last-child { grid-template-columns: 1fr !important; gap: 24px !important; }
             #invest > div:first-child { flex-direction: column !important; align-items: flex-start !important; gap: 24px; margin-bottom: 32px !important; }
+          }
+          @media (max-width: 767px) {
+            #invest > div:last-child { grid-template-columns: 1fr !important; gap: 24px !important; }
           }
           @media (max-width: 640px) {
             #invest h2 { font-size: 32px !important; letter-spacing: -1px !important; }

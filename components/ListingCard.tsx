@@ -109,7 +109,7 @@ export default function ListingCard({ listing, index = 0 }: Props) {
           .lc-title { font-size: 16px !important; }
           .lc-stats { gap: 8px !important; flex-wrap: wrap !important; }
           .lc-stats > div > div:first-child { font-size: 15px !important; }
-          .lc-stats > div > div:last-child { font-size: 10px !important; white-space: normal !important; word-break: break-word !important; }
+          .lc-stats > div > div:last-child { font-size: 10px !important; white-space: nowrap !important; }
         }
       `}</style>
     </motion.div>
