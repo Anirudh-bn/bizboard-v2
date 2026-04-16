@@ -21,7 +21,7 @@ export default function ListingCard({ listing, index = 0 }: Props) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      whileHover={{ scale: 1.02, zIndex: 5, boxShadow: '0 20px 60px rgba(13,27,42,0.18)' }}
+      whileHover={{ zIndex: 5, boxShadow: '0 20px 60px rgba(13,27,42,0.18)' }}
       style={{
         background: 'var(--white)',
         position: 'relative',
@@ -31,7 +31,7 @@ export default function ListingCard({ listing, index = 0 }: Props) {
         height: '100%',
       }}
     >
-      <div style={{ overflow: 'hidden', height: 200 }}>
+      <div className="lc-img" style={{ overflow: 'hidden', height: 200 }}>
         <motion.img
           whileHover={{ scale: 1.06 }}
           transition={{ duration: 0.6 }}
@@ -40,18 +40,18 @@ export default function ListingCard({ listing, index = 0 }: Props) {
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', filter: 'saturate(0.9)' }}
         />
       </div>
-      <div style={{ padding: 24 }}>
+      <div className="lc-body" style={{ padding: 24 }}>
         <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--navy-light)', fontFamily: "'DM Mono', monospace", marginBottom: 8 }}>
           {listing.category}
         </div>
-        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: 'var(--navy)', marginBottom: 4, letterSpacing: '-0.5px' }}>
+        <div className="lc-title" style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: 'var(--navy)', marginBottom: 4, letterSpacing: '-0.5px' }}>
           {listing.businessType}
         </div>
         <div style={{ fontSize: 12, color: 'var(--navy-light)', display: 'flex', alignItems: 'center', gap: 5, marginBottom: 20 }}>
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1C4.07 1 2.5 2.57 2.5 4.5c0 2.625 3.5 6.5 3.5 6.5s3.5-3.875 3.5-6.5C9.5 2.57 7.93 1 6 1z" stroke="currentColor" strokeWidth="1.2"/><circle cx="6" cy="4.5" r="1" fill="currentColor"/></svg>
           {listing.neighbourhood}, Hyderabad
         </div>
-        <div style={{ display: 'flex', gap: 20, marginBottom: 20, paddingBottom: 20, borderBottom: '1px solid var(--ivory-dark)' }}>
+        <div className="lc-stats" style={{ display: 'flex', gap: 20, marginBottom: 20, paddingBottom: 20, borderBottom: '1px solid var(--ivory-dark)' }}>
           {[
             { val: priceRange, key: 'Asking Price' },
             { val: revenueRange, key: 'Monthly Revenue' },
@@ -100,6 +100,15 @@ export default function ListingCard({ listing, index = 0 }: Props) {
           </span>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .lc-img { height: 160px !important; }
+          .lc-body { padding: 16px !important; }
+          .lc-title { font-size: 16px !important; }
+          .lc-stats { gap: 12px !important; }
+          .lc-stats > div > div:first-child { font-size: 14px !important; }
+        }
+      `}</style>
     </motion.div>
     </Link>
   )

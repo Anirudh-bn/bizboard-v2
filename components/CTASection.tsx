@@ -35,6 +35,9 @@ export default function CTASection() {
         </Link>
       </motion.div>
       <style>{`
+        @media (max-width: 768px) {
+          .cta-section { padding: 80px 40px !important; }
+        }
         @media (max-width: 640px) {
           .cta-section { padding: 72px 20px !important; }
           .cta-section h2 { font-size: 32px !important; letter-spacing: -1px !important; }

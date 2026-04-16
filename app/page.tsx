@@ -130,6 +130,8 @@ export default async function HomePage() {
         <style>{`
           @media (max-width: 1024px) {
             #invest { padding: 80px 32px !important; }
+          }
+          @media (max-width: 768px) {
             #invest > div:last-child { grid-template-columns: 1fr !important; }
           }
           @media (max-width: 640px) {

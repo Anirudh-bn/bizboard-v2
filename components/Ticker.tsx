@@ -14,7 +14,7 @@ export default function Ticker() {
       background: 'var(--navy)', color: 'var(--gold-light)',
       height: 34, overflow: 'hidden', display: 'flex', alignItems: 'center',
     }}>
-      <div style={{
+      <div className="ticker-label" style={{
         background: 'var(--gold)', color: 'var(--navy)',
         padding: '0 16px', height: '100%', display: 'flex', alignItems: 'center',
         fontFamily: "'DM Mono', monospace", fontSize: 10, fontWeight: 600,
@@ -25,7 +25,7 @@ export default function Ticker() {
       <div style={{ overflow: 'hidden', flex: 1 }}>
         <div className="ticker-animate" style={{ display: 'flex', whiteSpace: 'nowrap' }}>
           {[...items, ...items].map((item, i) => (
-            <div key={i} style={{
+            <div key={i} className="ticker-item" style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               padding: '0 40px', fontFamily: "'DM Mono', monospace",
               fontSize: 11, color: 'rgba(250,250,250,0.6)',
@@ -37,6 +37,12 @@ export default function Ticker() {
           ))}
         </div>
       </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .ticker-label { font-size: 9px !important; padding: 0 10px !important; letter-spacing: 1px !important; }
+          .ticker-item { padding: 0 16px !important; font-size: 10px !important; }
+        }
+      `}</style>
     </div>
   )
 }

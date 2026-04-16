@@ -140,8 +140,13 @@ export default function HeroSection({ listingCount = 0, totalDealsFormatted = 'â
           .hero-section > div:first-child { padding: 60px 32px !important; }
           .hero-section > div:last-child { height: 50vh; }
         }
+        @media (max-width: 768px) {
+          .hero-section { padding-top: 106px !important; }
+          .hero-section > div:first-child { padding: 60px 40px !important; }
+          .hero-section > div:last-child { height: 45vh; }
+        }
         @media (max-width: 640px) {
-          .hero-section { padding-top: 80px !important; min-height: auto !important; }
+          .hero-section { padding-top: 106px !important; min-height: auto !important; }
           .hero-section > div:first-child { padding: 40px 20px 32px !important; }
           .hero-section > div:last-child { height: 42vh; }
           .hero-section h1 { font-size: 42px !important; letter-spacing: -1.2px !important; }

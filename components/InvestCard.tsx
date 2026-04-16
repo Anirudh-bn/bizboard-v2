@@ -53,10 +53,10 @@ export default function InvestCard({ investment, index = 0 }: Props) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.6, delay: index * 0.15 }}
-        whileHover={{ y: -6, boxShadow: '0 24px 64px rgba(13,27,42,0.12)' }}
+        whileHover={{ boxShadow: '0 24px 64px rgba(13,27,42,0.12)' }}
         style={{ background: 'var(--white)', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border)', transition: 'box-shadow 0.4s' }}
       >
-        <div style={{ position: 'relative', overflow: 'hidden', height: 220 }}>
+        <div className="ic-img" style={{ position: 'relative', overflow: 'hidden', height: 220 }}>
           <motion.img
             whileHover={{ scale: 1.03 }}
             transition={{ duration: 0.6 }}
@@ -68,10 +68,10 @@ export default function InvestCard({ investment, index = 0 }: Props) {
             {investment.badge}
           </div>
         </div>
-        <div style={{ padding: 28 }}>
+        <div className="ic-body" style={{ padding: 28 }}>
           <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--navy-light)', fontFamily: "'DM Mono', monospace", marginBottom: 8 }}>{investment.type}</div>
           <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 700, color: 'var(--navy)', letterSpacing: '-0.5px', marginBottom: 20 }}>{investment.title}</div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24, padding: 20, background: 'var(--ivory)', borderRadius: 8 }}>
+          <div className="ic-stats" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24, padding: 20, background: 'var(--ivory)', borderRadius: 8 }}>
             {[
               { val: investment.requiredCapital, key: 'Required Capital' },
               { val: investment.equityOffered, key: 'Equity / Model' },
@@ -201,6 +201,13 @@ export default function InvestCard({ investment, index = 0 }: Props) {
           </motion.div>
         )}
       </AnimatePresence>
+      <style>{`
+        @media (max-width: 640px) {
+          .ic-img { height: 160px !important; }
+          .ic-body { padding: 16px !important; }
+          .ic-stats > div > div:first-child { font-size: 15px !important; }
+        }
+      `}</style>
     </>
   )
 }
