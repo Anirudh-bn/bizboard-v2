@@ -17,6 +17,7 @@ export default function ListingCard({ listing, index = 0 }: Props) {
   return (
     <Link href={`/listing/${listing.id}`} style={{ textDecoration: 'none', display: 'block' }}>
     <motion.div
+      className="lc-root"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
@@ -101,12 +102,14 @@ export default function ListingCard({ listing, index = 0 }: Props) {
         </div>
       </div>
       <style>{`
-        @media (max-width: 640px) {
-          .lc-img { height: 160px !important; }
-          .lc-body { padding: 16px !important; }
+        @media (max-width: 768px) {
+          .lc-root { width: 100% !important; }
+          .lc-img { height: 180px !important; }
+          .lc-body { padding: 20px !important; }
           .lc-title { font-size: 16px !important; }
-          .lc-stats { gap: 12px !important; }
-          .lc-stats > div > div:first-child { font-size: 14px !important; }
+          .lc-stats { gap: 8px !important; flex-wrap: wrap !important; }
+          .lc-stats > div > div:first-child { font-size: 15px !important; }
+          .lc-stats > div > div:last-child { font-size: 10px !important; white-space: normal !important; word-break: break-word !important; }
         }
       `}</style>
     </motion.div>

@@ -49,6 +49,7 @@ export default function InvestCard({ investment, index = 0 }: Props) {
   return (
     <>
       <motion.div
+        className="ic-root"
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
@@ -202,10 +203,14 @@ export default function InvestCard({ investment, index = 0 }: Props) {
         )}
       </AnimatePresence>
       <style>{`
-        @media (max-width: 640px) {
-          .ic-img { height: 160px !important; }
-          .ic-body { padding: 16px !important; }
-          .ic-stats > div > div:first-child { font-size: 15px !important; }
+        @media (max-width: 768px) {
+          .ic-root { width: 100% !important; }
+          .ic-img { height: 200px !important; }
+          .ic-body { padding: 20px !important; }
+          .ic-body > div:nth-child(2) { font-size: 18px !important; }
+          .ic-stats { gap: 12px !important; padding: 16px !important; }
+          .ic-stats > div > div:first-child { font-size: 16px !important; }
+          .ic-stats > div > div:last-child { font-size: 10px !important; white-space: normal !important; word-break: break-word !important; }
         }
       `}</style>
     </>

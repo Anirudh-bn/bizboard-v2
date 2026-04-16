@@ -9,7 +9,7 @@ export default function Ticker() {
   ]
 
   return (
-    <div style={{
+    <div className="ticker-wrap" style={{
       position: 'fixed', top: 72, left: 0, right: 0, zIndex: 99,
       background: 'var(--navy)', color: 'var(--gold-light)',
       height: 34, overflow: 'hidden', display: 'flex', alignItems: 'center',
@@ -38,9 +38,10 @@ export default function Ticker() {
         </div>
       </div>
       <style>{`
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
+          .ticker-wrap { height: 30px !important; }
           .ticker-label { font-size: 9px !important; padding: 0 10px !important; letter-spacing: 1px !important; }
-          .ticker-item { padding: 0 16px !important; font-size: 10px !important; }
+          .ticker-item { padding: 0 12px !important; font-size: 11px !important; }
         }
       `}</style>
     </div>
