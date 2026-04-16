@@ -66,6 +66,38 @@ export default async function HomePage() {
 
   return (
     <>
+      <style>{`
+        .home-section-pad {
+          padding: 100px 60px;
+        }
+        .listings-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 32px;
+        }
+        .invest-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 32px;
+        }
+        .howitworks-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+          .listings-grid { grid-template-columns: 1fr 1fr; }
+          .home-section-pad { padding: 80px 40px; }
+        }
+
+        @media (max-width: 767px) {
+          .home-section-pad { padding: 56px 16px !important; }
+          .listings-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+          .invest-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+          .howitworks-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+        }
+      `}</style>
       <HeroSection
         listingCount={listingCount}
         totalDealsFormatted={formatDeals(totalDeals)}
@@ -74,7 +106,7 @@ export default async function HomePage() {
       <MarqueeStrip />
 
       {/* Curated Opportunities */}
-      <section id="listings" style={{ padding: '100px 60px' }}>
+      <section id="listings" className="home-section-pad">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56 }}>
           <div>
             <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 12, fontFamily: "'DM Mono', monospace" }}>— Curated Opportunities</div>
@@ -86,22 +118,14 @@ export default async function HomePage() {
             View All Opportunities →
           </Link>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'var(--border)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
+        <div className="listings-grid" style={{ background: 'var(--border)', border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden' }}>
           {featured.map((listing, i) => (
             <ListingCard key={listing.id} listing={listing} index={i} />
           ))}
         </div>
         <style>{`
-          @media (max-width: 1024px) {
-            #listings { padding: 80px 32px !important; }
-            #listings > div:last-child { grid-template-columns: 1fr 1fr !important; }
-          }
-          @media (max-width: 768px) {
-            #listings { padding: 56px 16px !important; }
-            #listings > div:first-child { flex-direction: column !important; align-items: flex-start !important; gap: 24px; margin-bottom: 32px !important; }
-          }
           @media (max-width: 767px) {
-            #listings > div:last-child { grid-template-columns: 1fr !important; }
+            #listings > div:first-child { flex-direction: column !important; align-items: flex-start !important; gap: 24px; margin-bottom: 32px !important; }
           }
           @media (max-width: 640px) {
             #listings h2 { font-size: 32px !important; letter-spacing: -1px !important; }
@@ -112,7 +136,7 @@ export default async function HomePage() {
       <HowItWorks />
 
       {/* Private Investment Desk */}
-      <section id="invest" style={{ padding: '100px 60px', background: 'var(--ivory-dark)' }}>
+      <section id="invest" className="home-section-pad" style={{ background: 'var(--ivory-dark)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 56 }}>
           <div>
             <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 12, fontFamily: "'DM Mono', monospace" }}>— Private Investment Desk</div>
@@ -124,21 +148,14 @@ export default async function HomePage() {
             All Opportunities →
           </Link>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
+        <div className="invest-grid">
           {featuredInvestments.map((inv, i) => (
             <InvestCard key={inv.id} investment={inv} index={i} />
           ))}
         </div>
         <style>{`
-          @media (max-width: 1024px) {
-            #invest { padding: 80px 32px !important; }
-          }
-          @media (max-width: 768px) {
-            #invest { padding: 56px 16px !important; }
-            #invest > div:first-child { flex-direction: column !important; align-items: flex-start !important; gap: 24px; margin-bottom: 32px !important; }
-          }
           @media (max-width: 767px) {
-            #invest > div:last-child { grid-template-columns: 1fr !important; gap: 24px !important; }
+            #invest > div:first-child { flex-direction: column !important; align-items: flex-start !important; gap: 24px; margin-bottom: 32px !important; }
           }
           @media (max-width: 640px) {
             #invest h2 { font-size: 32px !important; letter-spacing: -1px !important; }
