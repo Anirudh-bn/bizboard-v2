@@ -43,7 +43,6 @@ export default async function HomePage() {
     prisma.listing.findMany({
       where: { status: 'ACTIVE' },
       orderBy: { createdAt: 'desc' },
-      take: 3,
       select: {
         id: true, businessType: true, category: true, neighbourhood: true,
         revenueRangeMin: true, revenueRangeMax: true,
