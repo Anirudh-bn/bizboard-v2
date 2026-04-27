@@ -35,7 +35,7 @@ export const investments: Investment[] = [
     expectedROI: '30%',
     paybackPeriod: '1.8 Yrs',
     monthlyRevenue: '₹8–10L',
-    imageUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80',
+    imageUrl: '/images/cloud-kitchen-expansion.jpg',
     badge: '↑ High ROI',
     description: 'Partner in scaling a cloud kitchen model already profitable in 2 cities to 10 cities. Asset-light model with strong unit economics.',
   },
